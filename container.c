@@ -10,6 +10,7 @@
 #include <unistd.h>
 
 #define NEW_ROOT "./container_root_fs"
+#define DISTRIBUTION "alpine"
 
 void write_to_file(const char *which, const char *format, ...) {
   FILE *fu = fopen(which, "w");
@@ -25,7 +26,7 @@ void write_to_file(const char *which, const char *format, ...) {
 int main() {
   mkdir(NEW_ROOT, 0755);
 
-  system("cp -r ./image/alpine/* " NEW_ROOT "/");
+  system("cp -r ./image/" DISTRIBUTION "/* " NEW_ROOT "/");
 
   uid_t uid = getuid();
   gid_t gid = getgid();
