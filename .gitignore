@@ -3,5 +3,4 @@
 image/*
 !image/.gitkeep
 
-chroot_fs
-pivot_root_fs
+container_root_fs

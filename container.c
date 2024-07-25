@@ -1,5 +1,6 @@
 #define _GNU_SOURCE
 #include <sched.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/mount.h>
@@ -10,10 +11,33 @@
 
 #define NEW_ROOT "./container_root_fs"
 
+void write_to_file(const char *which, const char *format, ...) {
+  FILE *fu = fopen(which, "w");
+  va_list args;
+  va_start(args, format);
+  if (vfprintf(fu, format, args) < 0) {
+    perror("cannot write");
+    exit(1);
+  }
+  fclose(fu);
+}
+
 int main() {
   mkdir(NEW_ROOT, 0755);
 
   system("cp -r ./image/alpine/* " NEW_ROOT "/");
+
+  uid_t uid = getuid();
+  gid_t gid = getgid();
+
+  if (0 != unshare(CLONE_NEWUSER)) {
+    fprintf(stderr, "%s\n", "USER unshare has failed");
+    exit(1);
+  }
+
+  write_to_file("/proc/self/uid_map", "0 %d 1", uid);
+  write_to_file("/proc/self/setgroups", "deny");
+  write_to_file("/proc/self/gid_map", "0 %d 1", gid);
 
   if (unshare(CLONE_NEWNS) == -1) {
     perror("unshare");
