@@ -1,0 +1,7 @@
+*.out
+
+image/*
+!image/.gitkeep
+
+chroot_fs
+pivot_root_fs
