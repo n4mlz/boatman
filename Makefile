@@ -1,4 +1,4 @@
-PROG := main
+PROG := boatman
 SRCS := $(wildcard ./src/*.c)
 OBJS := $(SRCS:%.c=%.o)
 DEPS := $(SRCS:%.c=%.d)
@@ -11,8 +11,8 @@ all: $(DEPENDS) $(PROG)
 $(PROG): $(OBJS)
 	$(CC) $(CCFLAGS) -o $@ $^
 
-.cpp.o:
-	$(CC) $(CCFLAGS) -MMD -MP -MF $(<:%.cpp=%.d) -c $< -o $(<:%.cpp=%.o)
+.c.o:
+	$(CC) $(CCFLAGS) -MMD -MP -MF $(<:%.c=%.d) -c $< -o $(<:%.c=%.o)
 
 .PHONY: clean
 clean:

@@ -1,6 +1,10 @@
+*.o
+*.d
 *.out
 
 image/*
 !image/.gitkeep
 
 container_root_fs
+boatman
+
