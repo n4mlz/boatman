@@ -23,7 +23,7 @@ void write_to_file(const char *which, const char *format, ...) {
   fclose(fu);
 }
 
-int main() {
+int new_container() {
   mkdir(NEW_ROOT, 0755);
 
   system("rm -rf " NEW_ROOT "/*");
