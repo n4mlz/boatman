@@ -10,7 +10,7 @@
 #include <unistd.h>
 
 #define NEW_ROOT "./container_root_fs"
-#define DISTRIBUTION "alpine"
+#define DISTRIBUTION "ubuntu"
 
 void write_to_file(const char *which, const char *format, ...) {
   FILE *fu = fopen(which, "w");
@@ -25,6 +25,8 @@ void write_to_file(const char *which, const char *format, ...) {
 
 int main() {
   mkdir(NEW_ROOT, 0755);
+
+  system("rm -rf " NEW_ROOT "/*");
 
   system("cp -r ./image/" DISTRIBUTION "/* " NEW_ROOT "/");
 
